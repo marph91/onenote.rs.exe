@@ -48,7 +48,7 @@ jobs:
         # release only if there is a matching release tag
         if: ${{ startsWith(github.ref, 'refs/tags/one2html-v') }}
         with:
-          files: ./binaries/onenote-parse-*
+          files: ./binaries/one2html-*
       - name: Smoke test
         shell: bash
         run: |

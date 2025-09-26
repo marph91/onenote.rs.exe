@@ -1,0 +1,33 @@
+on:
+  push:
+  workflow_dispatch:
+
+# https://docs.github.com/en/actions/tutorials/build-and-test-code/rust
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["windows-latest", "ubuntu-latest", "macos-latest", "macos-15-intel"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Build executable
+        working-directory: ./repos/onenote.rs
+        shell: bash
+        run: |
+          cargo build --release --bins
+          mkdir -p ../../binaries/
+          cp ./target/release/onenote-parse ../../binaries/
+      - name: Output debug information
+        shell: bash
+        run: |
+          rustup --version
+          ls -lh binaries/
+      # - name: Release
+      #   uses: softprops/action-gh-release@v2
+      #   # release only if there is a release tag
+      #   if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+      #   with:
+      #     files: ./binaries/*

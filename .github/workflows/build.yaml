@@ -27,9 +27,13 @@ jobs:
         run: |
           rustup --version
           ls -lh binaries/
-      # - name: Release
-      #   uses: softprops/action-gh-release@v2
-      #   # release only if there is a release tag
-      #   if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-      #   with:
-      #     files: ./binaries/*
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        # release only if there is a release tag
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        with:
+          files: ./binaries/*
+      - name: Smoke test
+        shell: bash
+        run: |
+          ./binaries/onenote-parse-* ./repos/onenote.rs/tests/samples/New\ Section\ 1.one

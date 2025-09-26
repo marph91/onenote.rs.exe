@@ -6,7 +6,10 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write  # needed for release
     strategy:
+      fail-fast: false
       matrix:
         os: ["windows-latest", "ubuntu-latest", "macos-latest", "macos-15-intel"]
     env:

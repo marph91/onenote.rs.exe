@@ -9,6 +9,8 @@ jobs:
     strategy:
       matrix:
         os: ["windows-latest", "ubuntu-latest", "macos-latest", "macos-15-intel"]
+    env:
+      OS: ${{ matrix.os }}  # TODO: Is there a built-in env variable?
     steps:
       - uses: actions/checkout@v4
         with:
@@ -16,10 +18,10 @@ jobs:
       - name: Build executable
         working-directory: ./repos/onenote.rs
         shell: bash
-        run: |
-          cargo build --release --bins
-          mkdir -p ../../binaries/
-          cp ./target/release/onenote-parse ../../binaries/
+        run: cargo build --release --bins
+      - name: Prepare executable for release
+        shell: bash
+        run: bash copy_and_add_os_suffix.bash ./repos/onenote.rs/target/release/onenote-parse
       - name: Output debug information
         shell: bash
         run: |

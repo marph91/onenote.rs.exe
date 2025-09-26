@@ -22,7 +22,8 @@ jobs:
       - name: Build one2html executable
         working-directory: ./repos/one2html
         shell: bash
-        run: cargo build --release --bins
+        # use --no-default-features as suggested in https://github.com/msiemens/one2html/issues/13#issuecomment-1839161117
+        run: cargo build --release --bins --no-default-features
       - name: Prepare executables for release
         shell: bash
         run: |
@@ -50,4 +51,4 @@ jobs:
         run: |
           ./binaries/onenote-parse-* ./repos/onenote.rs/tests/samples/New\ Section\ 1.one | tail
           ./binaries/one2html-* --input ./repos/onenote.rs/tests/samples/New\ Section\ 1.one --output ./binaries
-          ls -lh ./binaries
+          ls -lhR ./binaries

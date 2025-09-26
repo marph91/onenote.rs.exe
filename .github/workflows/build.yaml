@@ -19,21 +19,35 @@ jobs:
         working-directory: ./repos/onenote.rs
         shell: bash
         run: cargo build --release --bins
-      - name: Prepare executable for release
+      - name: Build one2html executable
+        working-directory: ./repos/one2html
         shell: bash
-        run: bash copy_and_add_os_suffix.bash ./repos/onenote.rs/target/release/onenote-parse
+        run: cargo build --release --bins
+      - name: Prepare executables for release
+        shell: bash
+        run: |
+          bash copy_and_add_os_suffix.bash ./repos/onenote.rs/target/release/onenote-parse
+          bash copy_and_add_os_suffix.bash ./repos/one2html/target/release/one2html
       - name: Output debug information
         shell: bash
         run: |
           rustup --version
           ls -lh binaries/
-      - name: Release
+      - name: Release onenote-parse
         uses: softprops/action-gh-release@v2
         # release only if there is a matching release tag
         if: ${{ startsWith(github.ref, 'refs/tags/onenote-parse-v') }}
+        with:
+          files: ./binaries/onenote-parse-*
+      - name: Release one2html
+        uses: softprops/action-gh-release@v2
+        # release only if there is a matching release tag
+        if: ${{ startsWith(github.ref, 'refs/tags/one2html-v') }}
         with:
           files: ./binaries/onenote-parse-*
       - name: Smoke test
         shell: bash
         run: |
           ./binaries/onenote-parse-* ./repos/onenote.rs/tests/samples/New\ Section\ 1.one | tail
+          ./binaries/one2html-* --input ./repos/onenote.rs/tests/samples/New\ Section\ 1.one --output ./binaries
+          ls -lh ./binaries

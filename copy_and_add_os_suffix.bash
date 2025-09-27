@@ -2,16 +2,16 @@
 
 OLD_FILENAME="$(basename -- $1)"
 case "$OS" in
-    "macos-15-intel")
+    macos-15-intel)
         NEW_FILENAME="$OLD_FILENAME-darwin-x86_64"
         ;;
-    "macos-latest")
+    macos-latest)
         NEW_FILENAME="$OLD_FILENAME-darwin-arm64"
         ;;
-    "ubuntu-latest")
+    ubuntu-*)
         NEW_FILENAME="$OLD_FILENAME-linux"
         ;;
-    "windows-latest")
+    windows-*)
         NEW_FILENAME="$OLD_FILENAME-windows.exe"
         ;;
     *)

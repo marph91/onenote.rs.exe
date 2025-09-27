@@ -54,4 +54,5 @@ jobs:
         run: |
           ./binaries/onenote-parse-* ./repos/onenote.rs/tests/samples/New\ Section\ 1.one | tail
           ./binaries/one2html-* --input ./repos/onenote.rs/tests/samples/New\ Section\ 1.one --output ./binaries
+          ./binaries/one2html-* --input ./repos/onenote.rs/tests/samples/Open\ Notebook.onetoc2 --output ./binaries
           ls -lhR ./binaries

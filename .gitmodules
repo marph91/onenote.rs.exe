@@ -1,6 +1,6 @@
 [submodule "repos/one2html"]
 	path = repos/one2html
-	url = https://github.com/marph91/one2html.git
+	url = https://github.com/msiemens/one2html.git
 [submodule "repos/onenote.rs"]
 	path = repos/onenote.rs
-	url = https://github.com/marph91/onenote.rs.git
+	url = https://github.com/msiemens/onenote.rs.git
